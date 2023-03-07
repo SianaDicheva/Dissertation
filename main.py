@@ -2,9 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-# https://perso.crans.org/besson/publis/Lempel-Ziv_Complexity.git/Short_study_of_the_Lempel-Ziv_complexity.html
-# implementation thats working with no mistakes 
-
 def lempel_ziv_complexity(binary_sequence):
     """Lempel-Ziv complexity for a binary sequence, in simple Python code."""
     u, v, w = 0, 1, 1
@@ -73,3 +70,7 @@ plt.plot(T_list, n_list, 'o-')
 plt.xlabel('Temperature')
 plt.ylabel('Lempel-Ziv Complexity')
 plt.show()
+
+
+# https://perso.crans.org/besson/publis/Lempel-Ziv_Complexity.git/Short_study_of_the_Lempel-Ziv_complexity.html
+# implementation thats working with no mistakes
