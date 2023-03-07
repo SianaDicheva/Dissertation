@@ -1,62 +1,75 @@
-def compress(data):
-    # Initialize the dictionary to contain all single-character substrings
-    dictionary = {chr(i): i for i in range(256)}
-    next_index = 256
-    output = []
-
-    # Initialize the input index
-    index = 0
-    while index < len(data):
-        # Find the longest match between the current input index and the substrings in the dictionary
-        length = 1
-        while index + length <= len(data) and data[index:index+length] in dictionary:
-            length += 1
-        length -= 1
-
-        # Output the index of the matching substring in the dictionary
-        output.append(dictionary[data[index:index+length]])
-
-        # Add the next character from the input string to the output string and to the dictionary
-        if index + length < len(data):
-            dictionary[data[index:index+length+1]] = next_index
-            next_index += 1
-
-        # Increment the input index
-        index += length
-
-    # Return the compressed output
-    return output
-
-def decompress(compressed):
-    # Initialize the dictionary to contain all single-character substrings
-    dictionary = {i: chr(i) for i in range(256)}
-    next_index = 256
-    output = []
-
-    # Loop through the compressed output
-    for index in compressed:
-        # Get the next substring from the dictionary
-        substring = dictionary[index]
-
-        # Add the substring to the output string
-        output.append(substring)
-
-        # Add the next character from the input string to the dictionary
-        if next_index < 2**16:
-            dictionary[next_index] = substring + substring[0]
-            next_index += 1
-
-    # Return the decompressed output
-    return ''.join(output)
+import numpy as np
+import matplotlib.pyplot as plt
 
 
-def ising_to_string(config):
-    """Converts a 2D Ising model configuration to a string."""
-    s = ""
-    for i in range(config.shape[0]):
-        for j in range(config.shape[1]):
-            if config[i,j] == 1:
-                s += "1"
+# https://perso.crans.org/besson/publis/Lempel-Ziv_Complexity.git/Short_study_of_the_Lempel-Ziv_complexity.html
+# implementation thats working with no mistakes 
+
+def lempel_ziv_complexity(binary_sequence):
+    """Lempel-Ziv complexity for a binary sequence, in simple Python code."""
+    u, v, w = 0, 1, 1
+    v_max = 1
+    length = len(binary_sequence)
+    complexity = 1
+    while True:
+        if binary_sequence[u + v - 1] == binary_sequence[w + v - 1]:
+            v += 1
+            if w + v >= length:
+                complexity += 1
+                break
+        else:
+            if v > v_max:
+                v_max = v
+            u += 1
+            if u == w:
+                complexity += 1
+                w += v_max
+                if w > length:
+                    break
+                else:
+                    u = 0
+                    v = 1
+                    v_max = 1
             else:
-                s += "0"
-    return s
+                v = 1
+    return complexity
+
+s = '1001111011000010'
+n = lempel_ziv_complexity(s)
+
+# define a list of file names
+file_names = ["D:\Education\Dissertation\code\ising_model_data\spin_matrix_T0.5.txt",
+              "D:\Education\Dissertation\code\ising_model_data\spin_matrix_T1.0.txt",
+              "D:\Education\Dissertation\code\ising_model_data\spin_matrix_T2.0.txt",
+              "D:\Education\Dissertation\code\ising_model_data\spin_matrix_T2.2.txt",
+              "D:\Education\Dissertation\code\ising_model_data\spin_matrix_T2.3.txt",
+              "D:\Education\Dissertation\code\ising_model_data\spin_matrix_T2.4.txt",
+              "D:\Education\Dissertation\code\ising_model_data\spin_matrix_T2.5.txt",
+              "D:\Education\Dissertation\code\ising_model_data\spin_matrix_T2.6.txt",
+              "D:\Education\Dissertation\code\ising_model_data\spin_matrix_T3.5.txt",
+              "D:\Education\Dissertation\code\ising_model_data\spin_matrix_T5.0.txt"]
+
+# define a list of temperatures
+T_list = [0.5, 1.0, 2.0, 2.2, 2.3, 2.4, 2.5, 2.6, 3.5, 5.0]
+
+# initialize a list to store Lempel-Ziv complexity values
+n_list = []
+
+# iterate over file names
+for file_name in file_names:
+    # open file in read mode
+    with open(file_name, "r") as text_file:
+        # read whole file to a string
+        data = text_file.read()
+        
+        # calculate Lempel-Ziv complexity
+        n = lempel_ziv_complexity(data)
+        
+        # append Lempel-Ziv complexity value to list
+        n_list.append(n)
+
+# plot Lempel-Ziv complexity against temperature
+plt.plot(T_list, n_list, 'o-')
+plt.xlabel('Temperature')
+plt.ylabel('Lempel-Ziv Complexity')
+plt.show()

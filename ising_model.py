@@ -22,7 +22,11 @@ def calculate_energy(spin_matrix, N, M, J):
     return -J * total_energy
 
 def calculate_magnetization(spin_matrix):
-    return abs(np.sum(spin_matrix))
+    return np.abs(np.sum(spin_matrix)/(N*M))
+
+def convert_to_binary(spin_matrix):
+    binary_spin_matrix = np.where(spin_matrix == -1, 0, 1)
+    return binary_spin_matrix
 
 def ising_model(N, M, T, J, n_steps):
     spin_matrix = initialize_spin_matrix(N, M)
@@ -44,7 +48,11 @@ def ising_model(N, M, T, J, n_steps):
                     spin_matrix[i, j] *= -1
         energies.append(calculate_energy(spin_matrix, N, M, J))
         # magnetizations.append(calculate_magnetization(spin_matrix))
+
         temperatures.append(T)
+    binary_spin_matrix = convert_to_binary(spin_matrix)
+    filename = f"ising_model_data/spin_matrix_T{T}.txt"
+    np.savetxt(filename, binary_spin_matrix, fmt='%d')
     return energies, temperatures, spin_matrix
 
 N = 100
