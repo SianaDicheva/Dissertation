@@ -15,7 +15,7 @@ def calculate_energy(spin_matrix, N, M, J):
     return -J * total_energy
 
 def calculate_magnetization(spin_matrix):
-    return (np.abs(np.sum(spin_matrix)))
+    return (np.abs(np.sum(spin_matrix))/(N*M))
 
 def ising_model(N, M, T, J, n_steps):
     spin_matrix = initialize_spin_matrix(N, M)
@@ -45,64 +45,13 @@ def ising_model(N, M, T, J, n_steps):
 
 N = 100
 M = 100
-T_list = [1.0, 2.2, 2.3, 2.4, 2.5, 3.5, 5.0]
+temp = np.arange(0.1, 5.1, 0.3)
+T_list = np.round(temp,3)
+# T_list = [1.0, 2.2, 2.3, 2.4, 2.5, 3.5, 5.0]
 J = 1
 n_steps = 50
 n_runs = 5 
 
-# avg_magnetizations = []
-# magnetizations_all = []
-
-# # for T in T_list:
-# #     avg_energy, avg_magnetization, magnetizations = ising_model(N, M, T, J, n_steps, n_runs)
-# #     avg_magnetizations.append(avg_magnetization)
-# #     magnetizations_all.append(magnetizations)
-
-# # fig, ax = plt.subplots()
-
-# # # # Plot individual magnetizations with rolling average
-# # # smoothed_magnetizations = []
-# # # for i in range(n_runs):
-# # #     magnetizations_smoothed = np.convolve(magnetizations_all[i], np.ones(5)/5, mode='valid')
-# # #     smoothed_magnetizations.append(magnetizations_smoothed)
-# # #     ax.plot(T_list[2:-2], magnetizations_smoothed, alpha=0.5, linewidth=0.5, color='gray')
-# # # avg_smoothed_magnetizations = np.mean(smoothed_magnetizations, axis=0)
-# # # ax.plot(T_list, avg_magnetizations, label="Average Magnetization", linewidth=2.5, linestyle='--')
-# # # ax.plot(T_list[2:-2], avg_smoothed_magnetizations, label="Smoothed Magnetization", linewidth=2.5, linestyle='--')
-# # # ax.set_xlabel("Temperature")
-# # # ax.set_ylabel("Magnetization")
-# # # ax.set_title("Magnetization vs. Temperature")
-# # # ax.legend()
-# # # plt.savefig("ising_model_plots/im_mag_smoothed.png")
-# # # plt.clf()
-
-# # # Plot individual magnetizations with rolling average
-# # for i in range(n_runs):
-# #     magnetizations_for_run_i = [magnetizations_all[j][i] for j in range(len(T_list))]
-# #     ax.scatter(T_list, magnetizations_for_run_i, label=f"Run {i+1}")
-# # ax.plot(T_list, avg_magnetizations, label="Average Magnetization", linewidth=2.5, linestyle='--')
-# # ax.set_xlabel("Temperature")
-# # ax.set_ylabel("Magnetization")
-# # ax.set_title("Magnetization vs. Temperature")
-# # ax.legend()
-# # plt.savefig("ising_model_plots/im_mag_smoothed.png")
-# # plt.clf()
-
-# for T in T_list:
-#     avg_energy, avg_magnetization, magnetizations = ising_model(N, M, T, J, n_steps, n_runs)
-#     avg_magnetizations.append(avg_magnetization)
-#     magnetizations_all.append(magnetizations)
-
-# fig, ax = plt.subplots()
-# for i in range(n_runs):
-#     ax.scatter(T_list, [magnetizations_all[j][i] for j in range(len(T_list))], label=f"Run {i+1}")
-# ax.plot(T_list, avg_magnetizations, label="Average Magnetization", linewidth=2.5, linestyle='--')
-# ax.set_xlabel("Temperature")
-# ax.set_ylabel("Magnetization")
-# ax.set_title("Magnetization vs. Temperature")
-# ax.legend()
-# plt.savefig("ising_model_plots/im_mag_4.png")
-# plt.clf()
 
 colors = ['blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink']
 
@@ -149,91 +98,8 @@ plt.xlabel("Temperature")
 plt.ylabel("Magnetization")
 plt.title("Average Magnetization vs. Temperature")
 plt.legend()
-plt.savefig("ising_model_plots/im_mag_avg_3.png")
+plt.savefig("ising_model_plots/im_mag_avg_5.png")
 plt.clf()
 
 
-
-# magnetizations = []
-
-# magnetizations_all = []
-
-# energies =[]
-# avg_magnetizations =[]
-# avg_energies =[]
-
-
-# for T in T_list:
-#     energies_T = []
-#     magnetizations_T = []
-#     for run in range(n_runs):
-#         energies_run, magnetizations_run,spin_matrix = ising_model(N, M, T, J, n_steps)
-#         energies_T.append(energies_run)
-#         magnetizations_T.append(magnetizations_run)
-#     energies.append(energies_T)
-#     magnetizations.append(magnetizations_T)
-#     avg_energies.append(np.mean(energies_T))
-#     avg_magnetizations.append(np.mean(np.abs(magnetizations_T)))
-#     magnetizations_all.append(magnetizations)
-
-# fig, ax = plt.subplots()
-
-
-# plt.figure(figsize=(8,6))
-# for i in range(len(T_list)):
-#     plt.plot(T_list[i]*np.ones(n_runs), avg_magnetizations[i]*np.ones(n_runs), 'o', color=colors[i])
-#     ax.scatter( T_list[i], [magnetizations_all[j][i] for j in range(len(T_list))], label=f"Run {i+1}")
-#     plt.plot(T_list[i], avg_magnetizations[i], 'o', color=colors[i], label='T = {}'.format(T_list[i]))
-# plt.plot(T_list, avg_magnetizations, label="Average Magnetization", linewidth=2.5, linestyle='--')
-
-# plt.xlabel("Temperature")
-# plt.ylabel("Magnetization")
-# plt.title("Average Magnetization vs. Temperature")
-# plt.legend()
-# plt.savefig("ising_model_plots/im_mag_avg_3.png")
-# plt.clf()
-
-# magnetizations = []
-# energies =[]
-# avg_magnetizations =[]
-# avg_energies =[]
-# for T in T_list:
-#     energies_T, magnetizations_T,spin_matrix = ising_model(N, M, T, J, n_steps)
-#     energies.append(energies_T)
-#     magnetizations.append(magnetizations_T)
-#     avg_energies.append(np.mean(energies_T))
-#     avg_magnetizations.append(np.mean(np.abs(magnetizations_T)))
-
-# plt.plot(T_list, avg_energies)
-# plt.xlabel("Temperature")
-# plt.ylabel("Energy")
-# plt.title("Average Magnetization vs. Temperature")
-# plt.savefig("ising_model_plots/im_mag_avg_1.png")
-# plt.clf()
-
-# plt.plot(T_list, avg_magnetizations)
-# plt.xlabel("Temperature")
-# plt.ylabel("Energy")
-# plt.title("Energy vs. Temperature")
-# plt.savefig("ising_model_plots/im_mag_1.png")
-# plt.clf()
-
-
-
-# for T in T_list:
-#     energies = []
-#     magnetizations = []
-#     for i in range(10):
-#         energy, magnetization = ising_model(N, M, T, J, n_steps)
-#         energies.append(energy)
-#         magnetizations.append(magnetization)
-#     avg_energies.append(np.mean(energies))
-#     avg_magnetizations.append(np.mean(magnetizations))
-
-# plt.plot(T_list, avg_energies, 'o-', label='Energy')
-# plt.plot(T_list, avg_magnetizations, 'o-', label='Magnetization')
-# plt.legend()
-# plt.xlabel('Temperature')
-# plt.ylabel('Average Energy/Magnetization')
-# plt.show()
 
