@@ -32,9 +32,9 @@ def lempel_ziv_complexity(binary_sequence):
                 v = 1
     return complexity
 
-s = '1001111011000010'
+s = '01011010001101110010'
 n = lempel_ziv_complexity(s)
-
+print(n)
 file_names =[]
 
 for x in os.listdir("D:\Education\Dissertation\code\ising_model_data"):
