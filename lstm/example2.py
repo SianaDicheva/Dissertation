@@ -1,7 +1,6 @@
 import csv
 import tensorflow as tf
 import numpy as np
-import tensorflow.keras
 from keras.preprocessing.text import Tokenizer
 from keras.utils import pad_sequences
 
@@ -166,6 +165,7 @@ model.compile(
     metrics=['accuracy'],
 )
 
+output_layers = []
 
 # def get_output_layer(epoch, logs):
 #     output_layer = model.predict(train_padded)
@@ -238,52 +238,3 @@ print(np.argmax(pred))
 print(labels[np.argmax(pred)-1])
 
 
-# for i in range(len(pred)):
-#     print(f"Prediction {i+1}:")
-#     print(pred[i])
-#     print(np.argmax(pred[i]))
-#     print(labels[np.argmax(pred[i])])
-
-#     # calculate complexity of output layer
-#     # complexity = lempel_ziv_complexity(np.array(pred[i] > 0.5, dtype=int))
-#     # print(f"Lempel-Ziv complexity of prediction {i+1}: {complexity}")
-
-
-# # define the callback to save the output at the end of each epoch
-# output_checkpoint = ModelCheckpoint('output_{epoch:02d}.npy', 
-#                                      save_weights_only=False, 
-#                                      save_best_only=False, 
-#                                      period=1)
-
-# train your model
-# lz_model = model.fit(train_padded, training_label_seq, epochs=num_epochs, validation_data=(validation_padded, validation_label_seq), verbose=2, callbacks=[output_checkpoint])
-
-
-# lz_compl = []
-
-# # Train the model for 10 epochs
-# for epoch in range(10):
-#     # Fit the model on the training data
-#     lz_model = model.fit(train_padded, training_label_seq, epochs=1, validation_data=(validation_padded, validation_label_seq), verbose=2)
-
-    
-#     # Predict the labels for the training data
-#     y_pred = lz_model.predict(train_padded)
-    
-#     # Convert the predicted labels to 0 or 1 based on the threshold of 0.5
-#     y_pred_binary = np.where(y_pred > 0.5, 1, 0)
-    
-#     # Print the accuracy of the predicted labels
-#     acc = lempel_ziv_complexity(y_pred_binary)
-#     print(f"Epoch {epoch+1} - Accuracy: {acc}")
-#     lz_compl.append(acc)
-
-# # Plot the complexities of BTC-USD and USD-EUR on the same graph
-# plt.plot(lz_compl,epochs , label='BTC-USD')
-# plt.xlabel('Months')
-# plt.ylabel('Lempel-Ziv Complexity')
-# plt.title('Comparison of BTC-USD and USD-ETH')
-# plt.legend()
-# plt.grid(True)
-# plt.tight_layout()
-# plt.show()

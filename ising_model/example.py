@@ -56,8 +56,8 @@ def ising_model(N, M, T, J, n_steps):
     print(filename)
     return energies, temperatures, spin_matrix
 
-N = 100
-M = 100
+N = 5
+M = 5
 
 
 temp = np.arange(0.1, 5.1, 0.1)
@@ -101,7 +101,7 @@ for T in T_list:
 # plt.ylabel("Magnetization")
 # plt.title("Magnetization vs. Temperature")
 # plt.savefig("plots/ex_mag.png")
-# # plt.show()
+# plt.show()
 
 # plt.clf()
 # plt.plot(T_list, magnetizations)
@@ -111,10 +111,10 @@ for T in T_list:
 # plt.savefig("plots/im_mag_abs.png")
 # # plt.show()
 
-# plt.clf()
-# plt.plot(T_list, energies1)
-# plt.xlabel("Temperature")
-# plt.ylabel("Energy")
-# plt.title("Energy vs. Temperature")
-# plt.savefig("plots/im_energy.png")
-# # plt.show()
+plt.clf()
+plt.plot(T_list, energies1)
+plt.xlabel("Temperature")
+plt.ylabel("Energy")
+plt.title("Energy vs. Temperature")
+plt.savefig("plots/im_energy.png")
+plt.show()
