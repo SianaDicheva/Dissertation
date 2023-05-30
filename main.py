@@ -93,17 +93,6 @@ plt.show()
 # implementation thats working with no mistakes
 
 
-# def convert_text_to_binary(text):
-#     binary_sequence = ''
-#     for char in text:
-#         binary_sequence += format(ord(char), '08b')
-#     return binary_sequence
-
-# text_response = "This is a sample response."
-# binary_sequence = convert_text_to_binary(text_response)
-# complexity = lempel_ziv_complexity(binary_sequence)
-# print("Lempel-Ziv complexity:", complexity)
-
 df = pd.read_csv('./financial_data/BTC-USD.csv')
 
 text_file = open('./financial_data/binary_output.txt', "r")

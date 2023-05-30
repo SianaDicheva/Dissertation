@@ -1,8 +1,21 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 from mpl_finance import candlestick_ohlc
 import matplotlib.dates as mdates
 import numpy as np
+import pandas as pd
+import numpy as np
+import csv
+import tensorflow as tf
+import numpy as np
+from keras.preprocessing.text import Tokenizer
+from keras.utils import pad_sequences
+
+from keras.models import Sequential
+from keras.layers import Dense, Flatten, LSTM, Dropout, Activation, Embedding, Bidirectional
+from keras.callbacks import ModelCheckpoint
+
+import matplotlib.pyplot as plt
+
 
 # Define functions for Williams indicator and Lempel-Ziv complexity
 def williams_indicator(high, low, close):
@@ -41,7 +54,7 @@ def lempel_ziv_complexity(binary_sequence):
     return complexity
 
 # Load data
-df = pd.read_csv('./financial_data/BTCUSD.csv')
+df = pd.read_csv('./financial_data/BTCUSD3y.csv')
 
 # Calculate Williams indicator
 williams = williams_indicator(df['High'], df['Low'], df['Close'])
@@ -58,7 +71,7 @@ for i in range(window_size//2, len(binary_sequence), window_size):
     lz_complexities.append(lz_complexity)
 
 # Create dates corresponding to midpoint of each window
-dates = pd.date_range(start='2022-01-11', end='2022-12-31', freq='21D') + pd.Timedelta(days=10)
+dates = pd.date_range(start='2020-01-11', end='2022-12-31', freq='21D') + pd.Timedelta(days=10)
 
 # Plot Lempel-Ziv complexity over time
 fig, ax = plt.subplots(figsize=(12, 6))
@@ -72,7 +85,7 @@ ax.legend(loc='upper left', fontsize=12)
 plt.xticks(rotation=45)
 plt.show()
 
-df = pd.read_csv("./financial_data/BTCUSD.csv", parse_dates=['Date'])
+df = pd.read_csv("./financial_data/BTCUSD3y.csv", parse_dates=['Date'])
 df = df.iloc[::-1]  # Reverse the dataframe to plot from earliest to latest date
 
 # Compute Williams %R indicator
@@ -105,6 +118,7 @@ ax2.grid(False)
 # Set the x-axis label and title
 ax.set_xlabel('Date')
 ax.set_title('Bitcoin Candlestick Chart with Williams %R Indicator')
+
 
 plt.show()
 

@@ -135,13 +135,19 @@ plt.show()
 
 
 # Read BTC-USD CSV file into a pandas DataFrame
-df_btc = pd.read_csv('./financial_data/BTCUSD.csv')
+df_btc = pd.read_csv('././financial_data/USDTUSD3y.csv')
 
 # Convert Date column to datetime format
 df_btc['Date'] = pd.to_datetime(df_btc['Date'])
 
 # Read USD-EUR CSV file into a pandas DataFrame
-df_eur = pd.read_csv('./financial_data/ETHUSD.csv')
+df_eur = pd.read_csv('././financial_data/USDTUSD3y.csv')
+
+# Convert Date column to datetime format
+df_eur['Date'] = pd.to_datetime(df_eur['Date'])
+
+# Read USD-EUR CSV file into a pandas DataFrame
+df_eur = pd.read_csv('././financial_data/USDTUSD3y.csv')
 
 # Convert Date column to datetime format
 df_eur['Date'] = pd.to_datetime(df_eur['Date'])
